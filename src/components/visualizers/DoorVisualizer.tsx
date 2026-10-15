@@ -11,75 +11,71 @@ export const DoorVisualizer: React.FC<DoorVisualizerProps> = ({ doorState }) => 
   const status: SystemStatus = isOpen ? 'ONLINE' : 'OFFLINE';
 
   return (
-    <div className="flex flex-col h-full items-center justify-between p-4 bg-white border border-slate-200 rounded-xl shadow-sm relative overflow-hidden">
+    <div className="flex flex-col h-full items-center justify-between p-4 bg-white/90 backdrop-blur-md border border-purple-100 rounded-2xl shadow-sm relative overflow-hidden">
       {/* Visual Header */}
-      <div className="w-full flex items-center justify-between pb-3 border-b border-slate-100">
+      <div className="w-full flex items-center justify-between pb-3 border-b border-purple-50">
         <div className="flex items-center space-x-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-ping" />
-          <span className="text-xs font-mono font-semibold tracking-wider text-slate-500 uppercase">SYS_SEC_GATES</span>
+          <div className={`w-2.5 h-2.5 rounded-full ${isOpen ? 'bg-emerald-500' : 'bg-purple-600'}`} />
+          <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
+            Laboratory Access Gate
+          </span>
         </div>
-        <div className={`px-2.5 py-1 rounded-full text-xs font-mono font-bold flex items-center space-x-1.5 ${
+        <div className={`px-2.5 py-1 rounded-full text-xs font-semibold flex items-center space-x-1.5 shadow-2xs ${
           isOpen 
-            ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' 
-            : 'bg-rose-50 text-rose-600 border border-rose-200'
+            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+            : 'bg-rose-50 text-rose-700 border border-rose-200'
         }`}>
-          <span className={`w-2 h-2 rounded-full ${isOpen ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
-          <span>{status}</span>
+          <span className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+          <span>{status === 'ONLINE' ? 'UNLOCKED' : 'LOCKED'}</span>
         </div>
       </div>
 
-      {/* Main Door Graphic */}
-      <div className="relative w-full max-w-[280px] h-[220px] bg-slate-100 rounded-lg border-2 border-slate-300 flex items-center justify-center overflow-hidden my-4 shadow-inner">
-        {/* Interior Illuminated Corridor when open */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-50 to-sky-100 flex flex-col items-center justify-center text-center p-4">
-          <div className="w-16 h-16 rounded-full bg-cyan-200/60 flex items-center justify-center border border-cyan-400/30 animate-pulse">
-            <ShieldCheck className="w-8 h-8 text-cyan-600" />
+      {/* Main Door Graphic Frame */}
+      <div className="relative w-full max-w-[280px] h-[200px] bg-gradient-to-b from-purple-50/50 to-slate-100 rounded-xl border border-purple-100 flex items-center justify-center overflow-hidden my-3 shadow-inner">
+        {/* Interior Corridor when open */}
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-100/40 via-white to-purple-50 flex flex-col items-center justify-center text-center p-4">
+          <div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center border border-purple-200 shadow-sm">
+            <ShieldCheck className="w-7 h-7 text-purple-700" />
           </div>
-          <span className="text-xs font-mono text-cyan-700 font-bold mt-2">SECURE SECTOR ACCESS GRANTED</span>
+          <span className="text-[11px] font-semibold text-purple-900 mt-2 tracking-wide">
+            ACCESS GRANTED
+          </span>
         </div>
 
         {/* Sliding Left Door Panel */}
         <div 
-          className={`absolute top-0 bottom-0 left-0 w-1/2 bg-slate-200 border-r border-slate-300 transition-transform duration-700 ease-in-out flex items-center justify-end pr-2 z-10 ${
-            isOpen ? '-translate-x-[85%]' : 'translate-x-0'
+          className={`absolute top-0 bottom-0 left-0 w-1/2 bg-gradient-to-r from-slate-200 to-purple-100 border-r border-purple-300 transition-transform duration-700 ease-in-out flex items-center justify-end pr-2 z-10 ${
+            isOpen ? '-translate-x-[88%]' : 'translate-x-0'
           }`}
         >
-          <div className="w-1.5 h-16 bg-slate-400 rounded-full" />
+          <div className="w-1.5 h-16 bg-purple-400 rounded-full" />
         </div>
 
         {/* Sliding Right Door Panel */}
         <div 
-          className={`absolute top-0 bottom-0 right-0 w-1/2 bg-slate-200 border-l border-slate-300 transition-transform duration-700 ease-in-out flex items-center justify-start pl-2 z-10 ${
-            isOpen ? 'translate-x-[85%]' : 'translate-x-0'
+          className={`absolute top-0 bottom-0 right-0 w-1/2 bg-gradient-to-l from-slate-200 to-purple-100 border-l border-purple-300 transition-transform duration-700 ease-in-out flex items-center justify-start pl-2 z-10 ${
+            isOpen ? 'translate-x-[88%]' : 'translate-x-0'
           }`}
         >
-          <div className="w-1.5 h-16 bg-slate-400 rounded-full" />
+          <div className="w-1.5 h-16 bg-purple-400 rounded-full" />
         </div>
 
-        {/* Center Keypad & Lock Indicator */}
-        <div className={`z-20 transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-          <div className="w-14 h-14 rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center">
-            {isOpen ? (
-              <Unlock className="w-7 h-7 text-emerald-500" />
-            ) : (
-              <Lock className="w-7 h-7 text-rose-500 animate-pulse" />
-            )}
-          </div>
+        {/* Center Lock Icon indicator */}
+        <div className="absolute z-20 w-10 h-10 rounded-xl bg-white border border-purple-200 shadow-md flex items-center justify-center transition-all duration-300">
+          {isOpen ? (
+            <Unlock className="w-5 h-5 text-emerald-600" />
+          ) : (
+            <Lock className="w-5 h-5 text-purple-700" />
+          )}
         </div>
       </div>
 
-      {/* Diagnostics Readout */}
-      <div className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs font-mono space-y-1 text-slate-600">
-        <div className="flex justify-between">
-          <span className="text-slate-400">GATE ID:</span>
-          <span className="font-semibold text-slate-700">GATE_ALPHA_01</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-slate-400">LOCK PROTOCOL:</span>
-          <span className={isOpen ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold'}>
-            {isOpen ? 'UNLOCKED' : 'ENGAGED'}
-          </span>
-        </div>
+      {/* Sub-status label */}
+      <div className="w-full pt-2 border-t border-purple-50 flex items-center justify-between text-xs text-slate-500">
+        <span>Required Level: <strong>&gt;= 7</strong></span>
+        <span className={isOpen ? 'text-emerald-600 font-bold' : 'text-slate-500'}>
+          {isOpen ? 'Pass' : 'Awaiting Fix'}
+        </span>
       </div>
     </div>
   );

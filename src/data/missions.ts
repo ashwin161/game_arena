@@ -6,7 +6,7 @@ export const MISSIONS: Mission[] = [
     slug: 'security-door',
     title: 'Security Door',
     subtitle: 'Access Control Systems',
-    objective: 'The primary laboratory door is locked. Fix the conditional logic so that access_level = 7 triggers door.open().',
+    objective: 'The primary laboratory door is locked. Fix the conditional logic so that access level = 7 triggers door.open().',
     difficulty: 'Easy',
     concept: 'Conditions',
     xpReward: 150,
@@ -16,6 +16,28 @@ if access_level > 10:
     door.open()
 else:
     door.lock()`,
+    startingCodes: {
+      python: `access_level = 7
+
+if access_level > 10:
+    door.open()
+else:
+    door.lock()`,
+      javascript: `let accessLevel = 7;
+
+if (accessLevel > 10) {
+    door.open();
+} else {
+    door.lock();
+}`,
+      typescript: `const accessLevel: number = 7;
+
+if (accessLevel > 10) {
+    door.open();
+} else {
+    door.lock();
+}`
+    },
     hints: [
       {
         tier: 1,
@@ -25,12 +47,12 @@ else:
       {
         tier: 2,
         type: 'Concept',
-        text: 'Conditional statements compare values using comparison operators: > (greater), >= (greater or equal), == (equal).'
+        text: 'Conditional statements compare values using comparison operators: > (greater), >= (greater or equal), == or === (equal).'
       },
       {
         tier: 3,
         type: 'Specific Direction',
-        text: 'Change "access_level > 10" to "access_level >= 7" or "access_level > 5" so that the condition evaluates to true.'
+        text: 'Change "access_level > 10" (or "accessLevel > 10") to ">= 7" or "== 7" so that the condition evaluates to true.'
       }
     ],
     testCases: [
@@ -56,7 +78,7 @@ else:
     slug: 'elevator',
     title: 'Elevator Shaft',
     subtitle: 'Vertical Transit Core',
-    objective: 'The elevator is stuck on ground floor 0. Use a while loop to lift the elevator until it reaches target_floor (5).',
+    objective: 'The elevator is stuck on ground floor 0. Use a while loop to lift the elevator until it reaches target floor (5).',
     difficulty: 'Easy',
     concept: 'Loops',
     xpReward: 200,
@@ -67,6 +89,31 @@ target_floor = 5
 if current_floor < target_floor:
     elevator.move_up()
     current_floor += 1`,
+    startingCodes: {
+      python: `current_floor = 0
+target_floor = 5
+
+# Fix the control block to move to target_floor
+if current_floor < target_floor:
+    elevator.move_up()
+    current_floor += 1`,
+      javascript: `let currentFloor = 0;
+const targetFloor = 5;
+
+// Fix the control block to move to targetFloor
+if (currentFloor < targetFloor) {
+    elevator.moveUp();
+    currentFloor += 1;
+}`,
+      typescript: `let currentFloor: number = 0;
+const targetFloor: number = 5;
+
+// Fix the control block to move to targetFloor
+if (currentFloor < targetFloor) {
+    elevator.moveUp();
+    currentFloor += 1;
+}`
+    },
     hints: [
       {
         tier: 1,
@@ -81,19 +128,19 @@ if current_floor < target_floor:
       {
         tier: 3,
         type: 'Specific Direction',
-        text: 'Replace the keyword "if" with "while" so that current_floor repeatedly increments until it reaches 5.'
+        text: 'Replace the keyword "if" with "while" so that the floor repeatedly increments until it reaches 5.'
       }
     ],
     testCases: [
       {
         id: 'tc1',
         description: 'Elevator floor transit loop',
-        expectedOutcome: 'elevator.move_up() called 5 times'
+        expectedOutcome: 'elevator.move_up() / elevator.moveUp() called 5 times'
       },
       {
         id: 'tc2',
         description: 'Final elevation check',
-        expectedOutcome: 'current_floor reaches target_floor (5)'
+        expectedOutcome: 'current floor reaches target floor (5)'
       }
     ],
     solutionExplanation: {
@@ -107,8 +154,8 @@ if current_floor < target_floor:
     slug: 'robot-arm',
     title: 'Robot Assembly',
     subtitle: 'Automation Joint Protocol',
-    objective: 'The robotic arm calibration routine is unhandled. Complete the calibrate_arm function so it calls robot.repair_joint(power_level).',
-    difficulty: 'Medium',
+    objective: 'The robotic arm calibration routine is unhandled. Complete the calibrate function so it calls repair joint with power 100.',
+    difficulty: 'Intermediate',
     concept: 'Functions',
     xpReward: 250,
     startingCode: `def calibrate_arm(power_level):
@@ -118,38 +165,61 @@ if current_floor < target_floor:
 
 # Execute system calibration routine
 calibrate_arm(100)`,
+    startingCodes: {
+      python: `def calibrate_arm(power_level):
+    # Function body is empty!
+    # Call robot.repair_joint with power_level
+    pass
+
+# Execute system calibration routine
+calibrate_arm(100)`,
+      javascript: `function calibrateArm(powerLevel) {
+    // Function body is empty!
+    // Call robot.repairJoint with powerLevel
+}
+
+// Execute system calibration routine
+calibrateArm(100);`,
+      typescript: `function calibrateArm(powerLevel: number): void {
+    // Function body is empty!
+    // Call robot.repairJoint with powerLevel
+}
+
+// Execute system calibration routine
+calibrateArm(100);`
+    },
     hints: [
       {
         tier: 1,
         type: 'Observation',
-        text: 'The function definition currently contains "pass", which is a placeholder that does nothing when calibrate_arm(100) is called.'
+        text: 'The function definition currently contains "pass" or is empty, which does nothing when calibration is called.'
       },
       {
         tier: 2,
         type: 'Concept',
-        text: 'Functions receive arguments in parameters (power_level) and perform commands within their indented body.'
+        text: 'Functions receive arguments in parameters and perform commands within their body block.'
       },
       {
         tier: 3,
         type: 'Specific Direction',
-        text: 'Replace "pass" with "robot.repair_joint(power_level)" inside calibrate_arm.'
+        text: 'Call robot.repair_joint(power_level) or robot.repairJoint(powerLevel) inside the calibrate function.'
       }
     ],
     testCases: [
       {
         id: 'tc1',
         description: 'Function call execution',
-        expectedOutcome: 'calibrate_arm(100) executes without error'
+        expectedOutcome: 'calibrateArm(100) / calibrate_arm(100) executes without error'
       },
       {
         id: 'tc2',
         description: 'Joint repair power transmission',
-        expectedOutcome: 'robot.repair_joint is triggered with power_level 100'
+        expectedOutcome: 'robot.repair_joint is triggered with power level 100'
       }
     ],
     solutionExplanation: {
-      whatWasWrong: 'The function definition was empty (`pass`), failing to forward calibration parameters to the arm.',
-      whatWasFixed: 'Implemented `robot.repair_joint(power_level)` inside the function body.',
+      whatWasWrong: 'The function definition was empty, failing to forward calibration parameters to the arm.',
+      whatWasFixed: 'Implemented joint repair call inside the function body.',
       conceptLearned: 'Functions, Parameter Passing & Subroutine Execution'
     }
   },
@@ -158,7 +228,7 @@ calibrate_arm(100)`,
     slug: 'power-core',
     title: 'Power Core Reactor',
     subtitle: 'Quantum Energy Grid',
-    objective: 'The reactor is reporting low energy (40/100). Combine base_power and auxiliary_power to equal target_power (100) and activate the core.',
+    objective: 'The reactor is reporting low energy (40/100). Combine base power and auxiliary power to equal target power (100) and activate the core.',
     difficulty: 'Hard',
     concept: 'Variables + Conditions',
     xpReward: 300,
@@ -173,11 +243,48 @@ if total_power == target_power:
     power_core.activate()
 else:
     power_core.overload_warning()`,
+    startingCodes: {
+      python: `base_power = 40
+auxiliary_power = 60
+target_power = 100
+
+# Calculate total power
+total_power = base_power
+
+if total_power == target_power:
+    power_core.activate()
+else:
+    power_core.overload_warning()`,
+      javascript: `const basePower = 40;
+const auxiliaryPower = 60;
+const targetPower = 100;
+
+// Calculate total power
+let totalPower = basePower;
+
+if (totalPower === targetPower) {
+    powerCore.activate();
+} else {
+    powerCore.overloadWarning();
+}`,
+      typescript: `const basePower: number = 40;
+const auxiliaryPower: number = 60;
+const targetPower: number = 100;
+
+// Calculate total power
+let totalPower: number = basePower;
+
+if (totalPower === targetPower) {
+    powerCore.activate();
+} else {
+    powerCore.overloadWarning();
+}`
+    },
     hints: [
       {
         tier: 1,
         type: 'Observation',
-        text: 'total_power is assigned only base_power (40), leaving auxiliary_power (60) unused and failing the check for 100.'
+        text: 'total power is assigned only base power (40), leaving auxiliary power (60) unused and failing the check for 100.'
       },
       {
         tier: 2,
@@ -187,14 +294,14 @@ else:
       {
         tier: 3,
         type: 'Specific Direction',
-        text: 'Change "total_power = base_power" to "total_power = base_power + auxiliary_power".'
+        text: 'Change "total_power = base_power" to "total_power = base_power + auxiliary_power" (or totalPower = basePower + auxiliaryPower).'
       }
     ],
     testCases: [
       {
         id: 'tc1',
         description: 'Energy level sum calculation',
-        expectedOutcome: 'total_power evaluates to 100'
+        expectedOutcome: 'total power evaluates to 100'
       },
       {
         id: 'tc2',
@@ -204,7 +311,7 @@ else:
     ],
     solutionExplanation: {
       whatWasWrong: 'Auxiliary energy channel was unlinked, leaving total grid output at 40 MW.',
-      whatWasFixed: 'Summed base_power and auxiliary_power variables to achieve 100 MW output.',
+      whatWasFixed: 'Summed base power and auxiliary power variables to achieve 100 MW output.',
       conceptLearned: 'Variable Expressions, Arithmetic Aggregation & Guard Logic'
     }
   }
